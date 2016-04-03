@@ -16,9 +16,11 @@ To calculate how much bytes each folders use
 import os
 import pprint
 
+
 def build_size_dictionary(root):
     size_byte = 'byte'
     size_percentage = 'percent'
+    dir_list = 'dirs'
     result = {}
     # os.walk loop
     for dirpath, dirnames, filenames in os.walk(root):
@@ -28,14 +30,15 @@ def build_size_dictionary(root):
             full_path = os.path.join(dirpath, filename)
             file_size_byte = os.path.getsize(os.path.join(dirpath, filename))
             folder_size_byte += file_size_byte
-            result[full_path] = {'byte': file_size_byte}
+            result[full_path] = {size_byte: file_size_byte}
             local_file_list.append(full_path)
 
-        result[dirpath] = folder_size_byte
+        result[dirpath] = {size_byte: folder_size_byte,
+                           dir_list: tuple([os.path.join(dirpath, dirname) for dirname in dirnames])}
 
         if folder_size_byte:
             for local_file in local_file_list:
-                result[local_file][size_percentage] = float(result[local_file][size_byte]) / result[dirpath] * 100
+                result[local_file][size_percentage] = float(result[local_file][size_byte]) / result[dirpath][size_byte] * 100
 
     return result
 
