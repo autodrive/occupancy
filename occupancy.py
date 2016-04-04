@@ -77,9 +77,15 @@ def normalize(size_sequence):
 
 
 def main():
-    pprint.pprint(folder_fraction(os.curdir))
-    folder_size = sub_folder_size(os.curdir)
-    pprint.pprint(folder_size)
+    path = os.curdir
+    fraction = folder_fraction(path)
+    pprint.pprint(fraction)
+
+    names, sizes, fractions = zip(*fraction)
+
+    folder_size = sub_folder_size(path)
+    print(folder_size)
+    print("error = %d" % (folder_size - sum(sizes)))
 
 
 if __name__ == '__main__':
