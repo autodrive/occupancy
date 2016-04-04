@@ -17,30 +17,21 @@ import os
 import pprint
 
 
-def build_size_dictionary(root):
-    size_byte = 'byte'
-    size_percentage = 'percent'
-    dir_list = 'dirs'
-    result = {}
+def sub_folder_size(sub_folder):
+    """
+    :param sub_folder: path to a sub folder
+    :return: size of all the files
+    """
+    total_size = 0
+
     # os.walk loop
-    for dirpath, dirnames, filenames in os.walk(root):
-        folder_size_byte = 0
-        local_file_list = []
+    for dirpath, dirnames, filenames in os.walk(sub_folder):
         for filename in filenames:
             full_path = os.path.join(dirpath, filename)
             file_size_byte = os.path.getsize(os.path.join(dirpath, filename))
-            folder_size_byte += file_size_byte
-            result[full_path] = {size_byte: file_size_byte}
-            local_file_list.append(full_path)
+            total_size += file_size_byte
 
-        result[dirpath] = {size_byte: folder_size_byte,
-                           dir_list: tuple([os.path.join(dirpath, dirname) for dirname in dirnames])}
-
-        if folder_size_byte:
-            for local_file in local_file_list:
-                result[local_file][size_percentage] = float(result[local_file][size_byte]) / result[dirpath][size_byte] * 100
-
-    return result
+    return total_size
 
 
 def normalize(size_sequence):
@@ -55,7 +46,7 @@ def normalize(size_sequence):
 
 
 def main():
-    folder_size = build_size_dictionary(os.curdir)
+    folder_size = sub_folder_size(os.curdir)
     pprint.pprint(folder_size)
 
 
