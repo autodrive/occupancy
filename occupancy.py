@@ -17,6 +17,7 @@ To calculate how much bytes each folders use
 
 import os
 import pprint
+import sys
 import time
 
 
@@ -80,8 +81,7 @@ def normalize(size_sequence):
     return tuple(result)
 
 
-def main():
-    path = os.curdir
+def main(path=os.curdir):
     fraction = folder_fraction(path)
     pprint.pprint(fraction)
 
@@ -93,4 +93,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1])
