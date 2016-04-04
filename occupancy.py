@@ -15,6 +15,7 @@ To calculate how much bytes each folders use
 
 import os
 import pprint
+import time
 
 
 def folder_fraction(path):
@@ -22,6 +23,8 @@ def folder_fraction(path):
     :param path:
     :return: tuple of (path, size in Byte, size in fraction 0~1)
     """
+    time_start = time.clock()
+
     abs_path = os.path.abspath(path)
 
     name_list = []
@@ -40,6 +43,8 @@ def folder_fraction(path):
     normalized_size_list = normalize(size_list)
     result = tuple(zip(name_list, size_list, normalized_size_list))
 
+    time_end = time.clock()
+    print("elapsed time = %6.4g (sec)" % (time_end - time_start))
     return result
 
 
