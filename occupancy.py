@@ -15,32 +15,56 @@ To calculate how much bytes each folders use
 
 import os
 import pprint
+import time
 
 
-def build_size_dictionary(root):
-    size_byte = 'byte'
-    size_percentage = 'percent'
-    dir_list = 'dirs'
-    result = {}
+def folder_fraction(path):
+    """
+    :param path:
+    :return: tuple of (path, size in Byte, size in fraction 0~1)
+    """
+    time_start = time.clock()
+
+    abs_path = os.path.abspath(path)
+
+    name_list = []
+    size_list = []
+    for name in os.listdir(abs_path):
+        full_path = os.path.join(abs_path, name)
+        name_list.append(full_path)
+
+        size = 0
+        if os.path.isfile(full_path):
+            size = os.path.getsize(full_path)
+        elif os.path.isdir(full_path):
+            size = sub_folder_size(full_path)
+        size_list.append(size)
+
+    normalized_size_list = normalize(size_list)
+    result = list(zip(name_list, size_list, normalized_size_list))
+    # Andrew Dalke and Raymond Hettinger, Sorting HOW TO, https://docs.python.org/3/howto/sorting.html#key-functions
+    result.sort(key=lambda item: -item[1])
+
+    time_end = time.clock()
+    print("elapsed time = %6.4g (sec)" % (time_end - time_start))
+    return tuple(result)
+
+
+def sub_folder_size(sub_folder):
+    """
+    :param sub_folder: path to a sub folder
+    :return: size of all the files
+    """
+    total_size = 0
+
     # os.walk loop
-    for dirpath, dirnames, filenames in os.walk(root):
-        folder_size_byte = 0
-        local_file_list = []
+    for dirpath, dirnames, filenames in os.walk(sub_folder):
         for filename in filenames:
             full_path = os.path.join(dirpath, filename)
             file_size_byte = os.path.getsize(os.path.join(dirpath, filename))
-            folder_size_byte += file_size_byte
-            result[full_path] = {size_byte: file_size_byte}
-            local_file_list.append(full_path)
+            total_size += file_size_byte
 
-        result[dirpath] = {size_byte: folder_size_byte,
-                           dir_list: tuple([os.path.join(dirpath, dirname) for dirname in dirnames])}
-
-        if folder_size_byte:
-            for local_file in local_file_list:
-                result[local_file][size_percentage] = float(result[local_file][size_byte]) / result[dirpath][size_byte] * 100
-
-    return result
+    return total_size
 
 
 def normalize(size_sequence):
@@ -55,8 +79,15 @@ def normalize(size_sequence):
 
 
 def main():
-    folder_size = build_size_dictionary(os.curdir)
-    pprint.pprint(folder_size)
+    path = os.curdir
+    fraction = folder_fraction(path)
+    pprint.pprint(fraction)
+
+    names, sizes, fractions = zip(*fraction)
+
+    folder_size = sub_folder_size(path)
+    print(folder_size)
+    print("error = %d" % (folder_size - sum(sizes)))
 
 
 if __name__ == '__main__':
