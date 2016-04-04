@@ -45,6 +45,16 @@ def fill_tree(tree_view_local, node):
 
 
 def update_tree(event):
+    """
+    handles virtual event '<<TreeviewOpen>>'
+    fired whenever the user clicks an item in the Treeview that can be further expanded
+    remove the dummy node that was created earlier and now populates the node with the contents present
+    in the specified directory.
+    mmgp, python gui tree walk, Jan 19 '13, http://stackoverflow.com/questions/14404982/python-gui-tree-walk
+
+    :param event:
+    :return:
+    """
     tree_view_local = event.widget
     fill_tree(tree_view_local, tree_view_local.focus())
 
@@ -68,6 +78,9 @@ def main():
         start_path = sys.argv[1]
 
     create_root(tree_view, start_path)
+    # binding to the virtual event
+    # fired whenever the user clicks an item in the Treeview that can be further expanded
+    # mmgp, python gui tree walk, Jan 19 '13, http://stackoverflow.com/questions/14404982/python-gui-tree-walk
     tree_view.bind('<<TreeviewOpen>>', update_tree)
 
     root.mainloop()
