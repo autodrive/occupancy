@@ -18,8 +18,14 @@ code is composed of details about storing additional info in the Treeview to mak
 import os
 import sys
 import tkinter
-# python 2.x ttk -> python 3.x tkinter.ttk
-import tkinter.ttk
+
+# krawyoti and cfi, How do I check what version of Python is running my script?, Jul 7 '09,
+#    http://stackoverflow.com/questions/1093322/how-do-i-check-what-version-of-python-is-running-my-script
+if 3 > sys.version_info[0]:
+    import ttk
+else:
+    # python 2.x ttk -> python 3.x tkinter.ttk
+    import tkinter.ttk as ttk
 
 
 def fill_tree(tree_view_local, node):
@@ -69,7 +75,7 @@ def create_root(tree_view_local, start_path):
 def main():
     root = tkinter.Tk()
 
-    tree_view = tkinter.ttk.Treeview(columns=("fullpath", "type"), displaycolumns='')
+    tree_view = ttk.Treeview(columns=("fullpath", "type"), displaycolumns='')
     tree_view.pack(fill='both', expand=True)
 
     # if sys.argv is not given, use current folder as tree root
