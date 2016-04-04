@@ -64,8 +64,9 @@ def sub_folder_size(sub_folder):
     for dirpath, dirnames, filenames in os.walk(sub_folder):
         for filename in filenames:
             full_path = os.path.join(dirpath, filename)
-            file_size_byte = os.path.getsize(os.path.join(dirpath, filename))
-            total_size += file_size_byte
+            if os.path.exists(full_path):
+                file_size_byte = os.path.getsize(full_path)
+                total_size += file_size_byte
 
     return total_size
 
