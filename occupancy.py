@@ -38,6 +38,7 @@ def folder_fraction(path):
         elif os.path.isdir(full_path):
             size = sub_folder_size(full_path)
         size_list.append(size)
+        print('.', end='')
 
     normalized_size_list = normalize(size_list)
     result = list(zip(name_list, size_list, normalized_size_list))
@@ -45,7 +46,7 @@ def folder_fraction(path):
     result.sort(key=lambda item: -item[1])
 
     time_end = time.clock()
-    print("elapsed time = %6.4g (sec)" % (time_end - time_start))
+    print("\nelapsed time = %6.4g (sec)" % (time_end - time_start))
     return tuple(result)
 
 

@@ -19,6 +19,8 @@ import os
 import sys
 import tkinter
 
+import occupancy
+
 # krawyoti and cfi, How do I check what version of Python is running my script?, Jul 7 '09,
 #    http://stackoverflow.com/questions/1093322/how-do-i-check-what-version-of-python-is-running-my-script
 if 3 > sys.version_info[0]:
@@ -38,14 +40,23 @@ def fill_tree(tree_view_local, node):
 
     # commented out unused local variable definition
     # parent = tree_view_local.parent(node)
-    for p in os.listdir(path):
-        p = os.path.join(path, p)
+
+    print("calculating sub folder sizes")
+    size_info = occupancy.folder_fraction(path)
+    print("end calculating sub folder sizes")
+
+    for p, byte, fraction in size_info:
+        # p = os.path.join(path, p)
         p_type = None
         if os.path.isdir(p):
             p_type = 'directory'
 
         f_name = os.path.split(p)[1]
-        oid = tree_view_local.insert(node, 'end', text=f_name, values=[p, p_type])
+
+        # TODO : Better presentation (GB? MB?, %?)
+        text = "%s %d %8.5f" % (f_name, byte, fraction)
+
+        oid = tree_view_local.insert(node, 'end', text=text, values=[p, p_type])
         if p_type == 'directory':
             tree_view_local.insert(oid, 0, text='dummy')
 
