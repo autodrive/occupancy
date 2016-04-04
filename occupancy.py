@@ -41,11 +41,13 @@ def folder_fraction(path):
         size_list.append(size)
 
     normalized_size_list = normalize(size_list)
-    result = tuple(zip(name_list, size_list, normalized_size_list))
+    result = list(zip(name_list, size_list, normalized_size_list))
+    # Andrew Dalke and Raymond Hettinger, Sorting HOW TO, https://docs.python.org/3/howto/sorting.html#key-functions
+    result.sort(key=lambda item: -item[1])
 
     time_end = time.clock()
     print("elapsed time = %6.4g (sec)" % (time_end - time_start))
-    return result
+    return tuple(result)
 
 
 def sub_folder_size(sub_folder):
