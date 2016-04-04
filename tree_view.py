@@ -18,6 +18,7 @@ code is composed of details about storing additional info in the Treeview to mak
 import os
 import sys
 import tkinter
+# python 2.x ttk -> python 3.x tkinter.ttk
 import tkinter.ttk
 
 
@@ -29,6 +30,7 @@ def fill_tree(tree_view_local, node):
     # Delete the possibly 'dummy' node present.
     tree_view_local.delete(*tree_view_local.get_children(node))
 
+    # commented out unused local variable definition
     # parent = tree_view_local.parent(node)
     for p in os.listdir(path):
         p = os.path.join(path, p)
@@ -60,6 +62,7 @@ def main():
     tree_view = tkinter.ttk.Treeview(columns=("fullpath", "type"), displaycolumns='')
     tree_view.pack(fill='both', expand=True)
 
+    # if sys.argv is not given, use current folder as tree root
     start_path = os.curdir
     if 1 < len(sys.argv):
         start_path = sys.argv[1]
