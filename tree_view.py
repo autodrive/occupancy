@@ -53,9 +53,9 @@ def fill_tree(tree_view_local, node):
 
         f_name = os.path.split(p)[1]
 
-        # TODO : Better presentation (GB? MB?, %?)
-        text = "%s %d %8.5f" % (f_name, byte, fraction)
-
+        text = "%s %s %8.5f" % (f_name, occupancy.sizeof_fmt(byte), fraction)
+        # Sridhar Ratnakumar, Reusable library to get human readable version of file size?, Jul 7 '09,
+        #   http://stackoverflow.com/questions/1094841/reusable-library-to-get-human-readable-version-of-file-size
         oid = tree_view_local.insert(node, 'end', text=text, values=[p, p_type])
         if p_type == 'directory':
             tree_view_local.insert(oid, 0, text='dummy')

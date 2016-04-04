@@ -81,6 +81,21 @@ def normalize(size_sequence):
     return tuple(result)
 
 
+def sizeof_fmt(num, suffix='B'):
+    """
+    Sridhar Ratnakumar, Reusable library to get human readable version of file size?, Jul 7 '09,
+        http://stackoverflow.com/questions/1094841/reusable-library-to-get-human-readable-version-of-file-size
+    :param num: memory size
+    :param suffix: Default B
+    :return: More human readable version of the size number, expecially very big.
+    """
+    for unit in ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi']:
+        if abs(num) < 1024.0:
+            return "%3.1f%s%s" % (num, unit, suffix)
+        num /= 1024.0
+    return "%.1f%s%s" % (num, 'Yi', suffix)
+
+
 def main(path=os.curdir):
     fraction = folder_fraction(path)
     pprint.pprint(fraction)
