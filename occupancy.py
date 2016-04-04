@@ -17,6 +17,32 @@ import os
 import pprint
 
 
+def folder_fraction(path):
+    """
+    :param path:
+    :return: tuple of (path, size in Byte, size in fraction 0~1)
+    """
+    abs_path = os.path.abspath(path)
+
+    name_list = []
+    size_list = []
+    for name in os.listdir(abs_path):
+        full_path = os.path.join(abs_path, name)
+        name_list.append(full_path)
+
+        size = 0
+        if os.path.isfile(full_path):
+            size = os.path.getsize(full_path)
+        elif os.path.isdir(full_path):
+            size = sub_folder_size(full_path)
+        size_list.append(size)
+
+    normalized_size_list = normalize(size_list)
+    result = tuple(zip(name_list, size_list, normalized_size_list))
+
+    return result
+
+
 def sub_folder_size(sub_folder):
     """
     :param sub_folder: path to a sub folder
@@ -46,6 +72,7 @@ def normalize(size_sequence):
 
 
 def main():
+    pprint.pprint(folder_fraction(os.curdir))
     folder_size = sub_folder_size(os.curdir)
     pprint.pprint(folder_size)
 
