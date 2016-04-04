@@ -43,6 +43,17 @@ def build_size_dictionary(root):
     return result
 
 
+def normalize(size_sequence):
+    """
+    :param size_sequence: list or tuple of [k1, k2, ... , kn]
+    :return: a tuple of (k1/(k1 + k2 + ... + kn), k2/(k1 + k2 + ... + kn), ... , kn/(k1 + k2 + ... + kn),)
+    """
+    total = sum(size_sequence)
+    denominator = 1.0 / total
+    result = [item * denominator for item in size_sequence]
+    return tuple(result)
+
+
 def main():
     folder_size = build_size_dictionary(os.curdir)
     pprint.pprint(folder_size)
