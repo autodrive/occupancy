@@ -1,4 +1,4 @@
-# -*-coding:cp949
+# -*- coding:cp949 -*-
 
 """
 mmgp, python gui tree walk, Jan 19 '13, http://stackoverflow.com/questions/14404982/python-gui-tree-walk
@@ -43,9 +43,9 @@ def fill_tree(tree_view_local, node):
     # commented out unused local variable definition
     # parent = tree_view_local.parent(node)
 
-    print("calculating sub folder sizes")
+    print("sizing sub folder %s" % path)
     size_info = occupancy.folder_fraction(path)
-    print("end calculating sub folder sizes")
+    print("end sizing sub folder %s" % path)
 
     for p, byte, fraction in size_info:
         # p = os.path.join(path, p)
