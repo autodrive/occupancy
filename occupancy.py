@@ -23,7 +23,9 @@ def folder_fraction(path):
     """
     time_start = time.clock()
 
-    abs_path = os.path.abspath(path)
+    # bobince, listdir doesn't print non-english letters correctly, Mar 31 2012, [Online] Available:
+    #   http://stackoverflow.com/questions/9954948/listdir-doesnt-print-non-english-letters-correctly
+    abs_path = unicode(os.path.abspath(path))
 
     name_list = []
     size_list = []
