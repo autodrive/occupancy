@@ -1,4 +1,4 @@
-# -*-coding:cp949
+# -*- coding:cp949 -*-
 
 """
 mmgp, python gui tree walk, Jan 19 '13, http://stackoverflow.com/questions/14404982/python-gui-tree-walk

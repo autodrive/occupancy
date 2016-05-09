@@ -5,7 +5,7 @@ To calculate how much bytes each folders use
 # TODO : Consider applying scandir for Python 3.x
 #           monkut, Calculating a directory size using Python?, Jan 29 '09,
 #               http://stackoverflow.com/questions/1392413/calculating-a-directory-size-using-python
-#           16.1. os ¡ª Miscellaneous operating system interfaces, Feb 27 '16,
+#           16.1. os - Miscellaneous operating system interfaces, Feb 27 '16,
 #               https://docs.python.org/3.5/library/os.html#os.scandir
 # TODO : Data presentation in GUI?
 
@@ -47,7 +47,8 @@ def folder_fraction(path):
     result.sort(key=lambda item: -item[1])
 
     time_end = time.clock()
-    print("‚nelapsed time = %6.4g (sec)" % (time_end - time_start))
+    # new line character backslash
+    print("elapsed time = %6.4g (sec)" % (time_end - time_start))
     return tuple(result)
 
 
