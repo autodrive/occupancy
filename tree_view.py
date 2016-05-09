@@ -1,3 +1,5 @@
+# -*-coding:cp949
+
 """
 mmgp, python gui tree walk, Jan 19 '13, http://stackoverflow.com/questions/14404982/python-gui-tree-walk
 
@@ -17,7 +19,7 @@ code is composed of details about storing additional info in the Treeview to mak
 
 import os
 import sys
-import tkinter
+import Tkinter
 
 import occupancy
 
@@ -26,8 +28,8 @@ import occupancy
 if 3 > sys.version_info[0]:
     import ttk
 else:
-    # python 2.x ttk -> python 3.x tkinter.ttk
-    import tkinter.ttk as ttk
+    # python 2.x ttk -> python 3.x Tkinter.ttk
+    import Tkinter.ttk as ttk
 
 
 def fill_tree(tree_view_local, node):
@@ -84,7 +86,7 @@ def create_root(tree_view_local, start_path):
 
 
 def main():
-    root = tkinter.Tk()
+    root = Tkinter.Tk()
 
     tree_view = ttk.Treeview(columns=("fullpath", "type"), displaycolumns='')
     tree_view.pack(fill='both', expand=True)

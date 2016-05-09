@@ -1,10 +1,11 @@
+# -*-coding:cp949
 """
 To calculate how much bytes each folders use
 """
 # TODO : Consider applying scandir for Python 3.x
 #           monkut, Calculating a directory size using Python?, Jan 29 '09,
 #               http://stackoverflow.com/questions/1392413/calculating-a-directory-size-using-python
-#           16.1. os â€” Miscellaneous operating system interfaces, Feb 27 '16,
+#           16.1. os ¡ª Miscellaneous operating system interfaces, Feb 27 '16,
 #               https://docs.python.org/3.5/library/os.html#os.scandir
 # TODO : Data presentation in GUI?
 
@@ -38,7 +39,7 @@ def folder_fraction(path):
         elif os.path.isdir(full_path):
             size = sub_folder_size(full_path)
         size_list.append(size)
-        print('.', end='')
+        #print('.', end='')
 
     normalized_size_list = normalize(size_list)
     result = list(zip(name_list, size_list, normalized_size_list))
@@ -46,7 +47,7 @@ def folder_fraction(path):
     result.sort(key=lambda item: -item[1])
 
     time_end = time.clock()
-    print("\nelapsed time = %6.4g (sec)" % (time_end - time_start))
+    print("‚nelapsed time = %6.4g (sec)" % (time_end - time_start))
     return tuple(result)
 
 
